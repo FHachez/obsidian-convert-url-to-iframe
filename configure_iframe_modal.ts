@@ -77,6 +77,7 @@ export function createIframeContainerEl(contentEl: HTMLElement, url: string): HT
 
 	const iframe = iframeContainer.createEl('iframe');
 	iframe.src = url;
+	iframe.allow = "fullscreen"
 	iframe.style.position = 'absolute';
 	iframe.style.height = '100%';
 	iframe.style.width = '100%';
