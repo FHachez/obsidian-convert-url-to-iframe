@@ -25,6 +25,8 @@ To install this plugin, download zip archive from GitHub releases page. Extract 
 - Make sure the iframe can work without the CSS class. (Kankaristo)
 - Fix the bad resizing when using Sliding Panes Plugin ([Issue 1](https://github.com/FHachez/obsidian-convert-url-to-iframe/issues/1)) (Kankaristo)
 - Better user messages and README.md (Kankaristo)
+- Preserve Youtube's timestamp [Issue 14](https://github.com/FHachez/obsidian-convert-url-to-iframe/issues/14)
+- Allow full screen iframes [Issue 8](https://github.com/FHachez/obsidian-convert-url-to-iframe/issues/8)
 
 ## 0.1.0
 First release
