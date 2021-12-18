@@ -1,5 +1,5 @@
 {
-  "id": "convert-url-to-iframe-dev",
+  "id": "convert-url-to-iframe",
   "name": "Convert url to preview (iframe)",
   "version": "0.3.0",
   "description": "Convert an url (ex, youtube) into an iframe (preview)",
