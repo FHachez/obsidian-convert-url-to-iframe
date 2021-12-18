@@ -1,7 +1,7 @@
 {
-  "id": "convert-url-to-iframe",
+  "id": "convert-url-to-iframe-dev",
   "name": "Convert url to preview (iframe)",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Convert an url (ex, youtube) into an iframe (preview)",
   "author": "Hachez Floran",
   "authorUrl": "https://github.com/FHachez",

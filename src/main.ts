@@ -1,7 +1,7 @@
 
 import { Notice, Plugin } from 'obsidian';
 
-import { isUrl, updateUrlIfYoutube } from 'iframe_converter';
+import { isUrl, updateUrlIfYoutube } from './utils/url_converter';
 import { ConfigureIframeModal } from './configure_iframe_modal';
 
 export default class FormatNotionPlugin extends Plugin {
