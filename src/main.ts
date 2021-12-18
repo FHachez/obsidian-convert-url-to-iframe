@@ -1,7 +1,7 @@
 
 import { Notice, Plugin } from 'obsidian';
 
-import { isUrl, updateUrlIfYoutube } from 'iframe_converter';
+import { isUrl, updateUrlIfYoutube } from './utils/url_converter';
 import { ConfigureIframeModal } from './configure_iframe_modal';
 
 export default class FormatNotionPlugin extends Plugin {
@@ -21,9 +21,9 @@ export default class FormatNotionPlugin extends Plugin {
 	}
 
 	urlToIframe(): void {
-		let activeLeaf: any = this.app.workspace.activeLeaf;
-		let editor = activeLeaf.view.sourceMode.cmEditor;
-		let selectedText = editor.somethingSelected()
+		const activeLeaf: any = this.app.workspace.activeLeaf;
+		const editor = activeLeaf.view.sourceMode.cmEditor;
+		const selectedText = editor.somethingSelected()
 			? editor.getSelection()
 			: false;
 

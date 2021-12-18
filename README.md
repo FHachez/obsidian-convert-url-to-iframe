@@ -18,6 +18,9 @@ To install this plugin, download zip archive from GitHub releases page. Extract 
 
 # Change log
 
+## 0.3.0
+- Simplify the output when using a recent Obsidian download, by leveraging `aspect-ratio` css.
+
 ## 0.2.0
 - Update: the keybinding from `Mode + Shift + I` to `Alt + I` ([Issue 4](https://github.com/FHachez/obsidian-convert-url-to-iframe/issues/4)) 
 - Only output the app name in the console ([Issue 3](https://github.com/FHachez/obsidian-convert-url-to-iframe/issues/3))

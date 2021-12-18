@@ -1,4 +1,4 @@
-import { isUrl, updateUrlIfYoutube } from '../iframe_converter';
+import { isUrl, updateUrlIfYoutube } from '../url_converter';
 
 describe('updateUrlIfYoutube', () => {
 	const inputToExpectedOutput = [
