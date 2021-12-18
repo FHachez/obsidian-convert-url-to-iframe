@@ -21,9 +21,9 @@ export default class FormatNotionPlugin extends Plugin {
 	}
 
 	urlToIframe(): void {
-		let activeLeaf: any = this.app.workspace.activeLeaf;
-		let editor = activeLeaf.view.sourceMode.cmEditor;
-		let selectedText = editor.somethingSelected()
+		const activeLeaf: any = this.app.workspace.activeLeaf;
+		const editor = activeLeaf.view.sourceMode.cmEditor;
+		const selectedText = editor.somethingSelected()
 			? editor.getSelection()
 			: false;
 

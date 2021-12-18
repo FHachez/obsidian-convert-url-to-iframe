@@ -6,8 +6,6 @@
     ],
     "extends": [
       "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
     ], 
     "parserOptions": {
         "sourceType": "module"
@@ -18,5 +16,18 @@
       "@typescript-eslint/ban-ts-comment": "off",
       "no-prototype-builtins": "off",
       "@typescript-eslint/no-empty-function": "off"
-    } 
-  }
+    } ,
+    "overrides": [
+        {
+        "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+        "parser": "@typescript-eslint/parser",
+        "plugins": ["@typescript-eslint"],
+        "extends": [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/eslint-recommended",
+            "plugin:@typescript-eslint/recommended",
+            "prettier" // Has to be last. Turns off eslint rules conflicting with prettier
+        ]
+        }
+    ]
+}

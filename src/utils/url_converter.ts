@@ -3,6 +3,7 @@ export function updateUrlIfYoutube(url: string) {
     // - youtube.com/.../?...&v=[Video Id]
     // - youtu.com/[Video Id]
     // - youtube.com/embed => don't do anything it's already an embed link
+    // eslint-disable-next-line no-useless-escape
     const youtubeIdRegex = /(youtube(?<top_domain1>(\.\w{2,3}){1,2})\/([^\/]+\/.+\/|.*[?&]v=)|youtu(?<top_domain2>(\.\w{2,3}){1,2})\/)(?<id>[a-zA-Z0-9_-]{11})/gi;
     const id = youtubeIdRegex.exec(url)
 

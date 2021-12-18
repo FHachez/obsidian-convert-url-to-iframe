@@ -1,6 +1,7 @@
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace process {
-    var versions: {
+    let versions: {
         electron: `${number}/${number}/${number}`;
     }
 }

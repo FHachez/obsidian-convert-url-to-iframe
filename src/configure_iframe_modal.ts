@@ -1,4 +1,4 @@
-import { App, DropdownComponent, Modal } from 'obsidian';
+import { App, Modal } from 'obsidian';
 import { createAspectRatioInput } from './components/aspect_ratio_input';
 import { createIframeContainerEl, createIframeContainerElLegacy } from './components/resizable_iframe_container';
 import { doesSupportAspectRatio } from './constant';
@@ -19,7 +19,7 @@ export class ConfigureIframeModal extends Modal {
 	}
 
 	onOpen() {
-		let { contentEl } = this;
+		const { contentEl } = this;
 
 		const container = contentEl.createEl('div');
 		container.className = 'iframe__modal__container';
@@ -69,7 +69,7 @@ export class ConfigureIframeModal extends Modal {
 	}
 
 	onClose() {
-		let { contentEl } = this;
+		const { contentEl } = this;
 		contentEl.empty();
 	}
 }
