@@ -1,13 +1,12 @@
 import { App, DropdownComponent, Modal } from 'obsidian';
 import { createAspectRatioInput } from './components/aspect_ratio_input';
-import { createIframeContainerEl } from './components/resizable_iframe_container';
+import { createIframeContainerEl, createIframeContainerElLegacy } from './components/resizable_iframe_container';
+import { doesSupportAspectRatio } from './constant';
 
 
 
 export class ConfigureIframeModal extends Modal {
 	url: string;
-	sucess: boolean;
-	generatedIframe: string;
 	editor: any;
 
 	constructor(app: App, url: string, editor: any) {
@@ -26,23 +25,30 @@ export class ConfigureIframeModal extends Modal {
 		container.className = 'iframe__modal__container';
 
 		const title = contentEl.createEl('h2');
-		title.innerText = "This is how the iframe is going to look";
+		title.innerText = "This is how the link is going to look";
 
 		const subTitle = contentEl.createEl('div');
-		subTitle.innerText = "To choose the size, drag the <strong>bottom right</strong> (the iframe won't respect the note width)";
+		const outdatedObsidianWarning = doesSupportAspectRatio? "": "</br><strong>For the best experience, please re-download Obsidian to get the latest Electron version</strong>.";
+		subTitle.innerHTML = "To choose the size, drag the <strong>bottom right</strong> (the preview won't respect the note width)." + outdatedObsidianWarning;
 
-		const {iframeContainer, outputHtml, resetToDefaultWidth, updateAspectRatio } = createIframeContainerEl(contentEl, this.url);
-		const widthCheckbox = createShouldUseDefaultWidthCheckbox(container, resetToDefaultWidth);
+		// Electron < 12 doesn't support the aspect ratio. We need to use a fancy div container with a padding bottom
+		const { iframeContainer, outputHtml, resetToDefaultWidth, updateAspectRatio } = doesSupportAspectRatio ?
+			createIframeContainerEl(contentEl, this.url) : createIframeContainerElLegacy(contentEl, this.url);
+		const widthCheckbox = createShouldUseDefaultWidthButton(container, resetToDefaultWidth);
 		const aspectRatioInput = createAspectRatioInput(container ,updateAspectRatio);
 
-		const cancelButton = contentEl.createEl('button');
+
+		const buttonContainer = contentEl.createEl('div');
+		buttonContainer.className = 'button__container space-y';
+
+		const cancelButton = buttonContainer.createEl('button');
 		cancelButton.setText('Cancel');
 		cancelButton.onclick = (e) => {
 			e.preventDefault();
 			this.close();
 		};
 
-		const okButton = contentEl.createEl('button');
+		const okButton = buttonContainer.createEl('button');
 		okButton.setText('OK');
 		okButton.className = 'mod-warning';
 		okButton.onclick = (e) => {
@@ -52,11 +58,6 @@ export class ConfigureIframeModal extends Modal {
 			this.close();
 		};
 
-
-		const buttonContainer = contentEl.createEl('div');
-		buttonContainer.className = 'button__container space-x';
-		buttonContainer.appendChild(okButton);
-		buttonContainer.appendChild(cancelButton);
 
 		container.appendChild(title);
 		container.appendChild(subTitle);
@@ -74,10 +75,10 @@ export class ConfigureIframeModal extends Modal {
 }
 
 
-export function createShouldUseDefaultWidthCheckbox(container: HTMLElement, onClick: () => void): HTMLDivElement {
+export function createShouldUseDefaultWidthButton(container: HTMLElement, onClick: () => void): HTMLDivElement {
 	const name = "shouldUseDefaultWidth";
 	const checkboxContainer = container.createEl('div');
-	checkboxContainer.className = 'space-x'
+	checkboxContainer.className = 'space-y'
 
 	const label = checkboxContainer.createEl('button');
 	label.setAttribute('for', name);

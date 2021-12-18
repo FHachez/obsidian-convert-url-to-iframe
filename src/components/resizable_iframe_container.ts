@@ -1,5 +1,6 @@
 import { defaultHeight } from "src/constant";
 import { AspectRatioType } from "src/types/aspect-ratio";
+import { swapRatio } from "src/utils/ratio_swapper";
 
 export interface IResizableIframeContainerOutput {
     iframeContainer: HTMLElement,
@@ -10,11 +11,51 @@ export interface IResizableIframeContainerOutput {
 
 
 export function createIframeContainerEl(contentEl: HTMLElement, url: string): IResizableIframeContainerOutput{
+	// Container to keep a min height for the iframe to keep the content visible
+	const iframeContainer = contentEl.createEl('div');
+	iframeContainer.className = "iframe__container space-y"
+
+	// Inline styling to make sure that the created iframe will keep the style even without the plugin
+	const iframe = iframeContainer.createEl('iframe');
+	iframe.src = url;
+	iframe.allow = "fullscreen"
+	iframe.style.height = '100%';
+	iframe.style.width = '100%';
+	iframe.style.setProperty('aspect-ratio', '16/9');
+
+    const resetToDefaultWidth= () => {
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+        };
+	
+	resetToDefaultWidth();
+
+
+	return {
+        iframeContainer,
+        updateAspectRatio: (value) => {
+            if (value === 'none') {
+            	iframe.style.removeProperty('aspect-ratio');
+            } else {
+            	iframe.style.setProperty('aspect-ratio', value);
+				resetToDefaultWidth();
+            }
+        },
+        outputHtml: () => {
+			return iframe.outerHTML;
+
+        },
+        resetToDefaultWidth,
+	};
+}
+
+// Electron < 12 doesn't support the aspect ratio. We need to use a fancy div container with a padding bottom
+export function createIframeContainerElLegacy(contentEl: HTMLElement, url: string): IResizableIframeContainerOutput{
 	// Inline styling to make sure that the created iframe will keep the style even without the plugin
 
 	// This container can be resized
 	const iframeContainer = contentEl.createEl('div');
-	iframeContainer.className = "iframe_container space-x"
+	iframeContainer.className = "iframe__container__legacy space-y"
 	iframeContainer.style.overflow = 'auto';
 	iframeContainer.style.resize = 'both';
 	iframeContainer.style.height = defaultHeight;
@@ -52,7 +93,7 @@ export function createIframeContainerEl(contentEl: HTMLElement, url: string): IR
                 ratioContainer.style.paddingBottom = 'calc(var(--aspect-ratio) * 100%)';
                 ratioContainer.style.height = '0px';
             }
-            ratioContainer.style.setProperty('--aspect-ratio', value);
+            ratioContainer.style.setProperty('--aspect-ratio', swapRatio(value));
         },
         outputHtml: () => {
 			iframeContainer.className = "";
