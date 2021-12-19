@@ -6,12 +6,12 @@ import { doesSupportAspectRatio } from './constant';
 
 
 export class ConfigureIframeModal extends Modal {
-	url: string;
+	iframeHtml: string;
 	editor: any;
 
-	constructor(app: App, url: string, editor: any) {
+	constructor(app: App, iframeHtml: string, editor: any) {
 		super(app);
-		this.url = url;
+		this.iframeHtml = iframeHtml;
 		this.editor = editor;
 
 		// Allow the modal to grow in width
@@ -33,7 +33,7 @@ export class ConfigureIframeModal extends Modal {
 
 		// Electron < 12 doesn't support the aspect ratio. We need to use a fancy div container with a padding bottom
 		const { iframeContainer, outputHtml, resetToDefaultWidth, updateAspectRatio } = doesSupportAspectRatio ?
-			createIframeContainerEl(contentEl, this.url) : createIframeContainerElLegacy(contentEl, this.url);
+			createIframeContainerEl(contentEl, this.iframeHtml) : createIframeContainerElLegacy(contentEl, this.iframeHtml);
 		const widthCheckbox = createShouldUseDefaultWidthButton(container, resetToDefaultWidth);
 		const aspectRatioInput = createAspectRatioInput(container ,updateAspectRatio);
 

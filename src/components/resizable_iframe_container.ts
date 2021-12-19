@@ -10,14 +10,19 @@ export interface IResizableIframeContainerOutput {
 }
 
 
-export function createIframeContainerEl(contentEl: HTMLElement, url: string): IResizableIframeContainerOutput{
+export function createIframeContainerEl(contentEl: HTMLElement, iframeHtml: string): IResizableIframeContainerOutput{
 	// Container to keep a min height for the iframe to keep the content visible
 	const iframeContainer = contentEl.createEl('div');
 	iframeContainer.className = "iframe__container space-y"
 
 	// Inline styling to make sure that the created iframe will keep the style even without the plugin
-	const iframe = iframeContainer.createEl('iframe');
-	iframe.src = url;
+	const fragment = document.createElement('template');
+	fragment.innerHTML = iframeHtml;
+
+	console.log(fragment)
+	const  iframe = fragment.content.firstChild as HTMLIFrameElement;
+	iframeContainer.appendChild(iframe);
+	//const iframe = iframeContainer.createEl('iframe');
 	iframe.allow = "fullscreen"
 	iframe.style.height = '100%';
 	iframe.style.width = '100%';

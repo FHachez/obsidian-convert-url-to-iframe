@@ -1,33 +1,43 @@
-export function updateUrlIfYoutube(url: string) {
-    // Youtube url format: 
-    // - youtube.com/.../?...&v=[Video Id]
-    // - youtu.com/[Video Id]
-    // - youtube.com/embed => don't do anything it's already an embed link
-    // eslint-disable-next-line no-useless-escape
-    const youtubeIdRegex = /(youtube(?<top_domain1>(\.\w{2,3}){1,2})\/([^\/]+\/.+\/|.*[?&]v=)|youtu(?<top_domain2>(\.\w{2,3}){1,2})\/)(?<id>[a-zA-Z0-9_-]{11})/gi;
-    const id = youtubeIdRegex.exec(url)
+import { hasProvider, extract, VideoTypeData, setRequestOptions } from 'oembed-parser'
+import {sanitize} from 'dompurify'
 
-    if (id) {
-        const urlParameterMatches = url.match(/\?([^&]+)/);
-        const urlParameters = new URLSearchParams(
-            urlParameterMatches ? urlParameterMatches[0] : ''
-        )
 
-        // We need to remove the `v` parameter which contains the video id since we put it in the url
-        urlParameters.delete('v')
+const buildDefaultIframe = (url: string) => {
+    return `<iframe src=${url} allow="fullscreen" style="height:100%;width:100%; aspect-ratio=16/9;"></iframe>`
+}
 
-        if (urlParameters.has('t')) {
-            urlParameters.set('start', urlParameters.get('t'));
-            urlParameters.delete('t')
+export const getIframe = async (url: string): Promise<string> => {
+    const defaultHtml = buildDefaultIframe(url);
+    if (!hasProvider(url)) {
+        return defaultHtml
+    }
+
+    try {
+        // Get the Oemb
+        const oembedData = await extract(url);
+
+        if(oembedData && oembedData.type !== 'rich' && oembedData.type !=='video') {
+            throw new Error('Not a rich or video type:' + oembedData )
+        }
+        
+        // Both Rich and Video types have an html property
+        const html = (oembedData as VideoTypeData)?.html;
+
+        // We only allow an iframe
+        const cleanedHtml = sanitize(html, { ALLOWED_TAGS: ["iframe"]})
+
+        if(!cleanedHtml.startsWith('<iframe')) {
+            // It would mess up our handling of iframe for the resizing and aspec ratio
+            throw new Error('Not an iframe, we currently do not support this: ' + html )
         }
 
-        const parameters = urlParameters.toString().length > 0 ? `?${urlParameters.toString()}` : '';
-        const topDomain = id.groups['top_domain1'] || id.groups['top_domain2'] || ".com";
-
-        return `https://www.youtube${topDomain}/embed/${id.groups['id']}${parameters}`;
+        return cleanedHtml
+    } catch (e) {
+        console.warn(`Could not get oembed data for ${url}`, e);
+        return defaultHtml
     }
-    return url;
 }
+
 
 export function isUrl(text: string): boolean {
     const urlRegex = new RegExp(

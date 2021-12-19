@@ -1,7 +1,7 @@
 
 import { Notice, Plugin } from 'obsidian';
 
-import { isUrl, updateUrlIfYoutube } from './utils/url_converter';
+import { getIframe, isUrl, updateUrlIfYoutube } from './utils/url_converter';
 import { ConfigureIframeModal } from './configure_iframe_modal';
 
 export default class FormatNotionPlugin extends Plugin {
@@ -20,7 +20,7 @@ export default class FormatNotionPlugin extends Plugin {
 		});
 	}
 
-	urlToIframe(): void {
+	async urlToIframe(): Promise<void> {
 		const activeLeaf: any = this.app.workspace.activeLeaf;
 		const editor = activeLeaf.view.sourceMode.cmEditor;
 		const selectedText = editor.somethingSelected()
@@ -28,8 +28,8 @@ export default class FormatNotionPlugin extends Plugin {
 			: false;
 
 		if (selectedText && isUrl(selectedText)) {
-			const url = updateUrlIfYoutube(selectedText)
-			const modal = new ConfigureIframeModal(this.app, url, editor)
+			const iframeHtml = await getIframe(selectedText)
+			const modal = new ConfigureIframeModal(this.app, iframeHtml, editor)
 			modal.open();
 		} else {
 			new Notice('Select a URL to convert to an iframe.');
