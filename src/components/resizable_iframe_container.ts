@@ -1,6 +1,6 @@
 import { defaultHeight } from "src/constant";
 import { AspectRatioType } from "src/types/aspect-ratio";
-import { swapRatio } from "src/utils/ratio_swapper";
+import { addAspectRatio, swapRatio } from "src/utils/ratio.utils";
 
 export interface IResizableIframeContainerOutput {
     iframeContainer: HTMLElement,
@@ -10,18 +10,20 @@ export interface IResizableIframeContainerOutput {
 }
 
 
-export function createIframeContainerEl(contentEl: HTMLElement, url: string): IResizableIframeContainerOutput{
+export function createIframeContainerEl(contentEl: HTMLElement, iframeHtml: string): IResizableIframeContainerOutput{
 	// Container to keep a min height for the iframe to keep the content visible
 	const iframeContainer = contentEl.createEl('div');
 	iframeContainer.className = "iframe__container space-y"
 
 	// Inline styling to make sure that the created iframe will keep the style even without the plugin
-	const iframe = iframeContainer.createEl('iframe');
-	iframe.src = url;
-	iframe.allow = "fullscreen"
-	iframe.style.height = '100%';
-	iframe.style.width = '100%';
-	iframe.style.setProperty('aspect-ratio', '16/9');
+	const fragment = document.createElement('template');
+	fragment.innerHTML = iframeHtml;
+
+	const  iframe = fragment.content.firstChild as HTMLIFrameElement;
+	iframeContainer.appendChild(iframe);
+
+	console.log(iframe.outerHTML)
+	addAspectRatio(iframe);
 
     const resetToDefaultWidth= () => {
             iframe.style.width = '100%';
@@ -30,6 +32,7 @@ export function createIframeContainerEl(contentEl: HTMLElement, url: string): IR
 	
 	resetToDefaultWidth();
 
+	console.log(iframeHtml, iframe)
 
 	return {
         iframeContainer,
