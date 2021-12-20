@@ -20,6 +20,8 @@ To install this plugin, download zip archive from GitHub releases page. Extract 
 
 ## 0.3.0
 - Simplify the output when using a recent Obsidian download, by leveraging `aspect-ratio` css.
+- Instead of doing a custom mapping to embed for YouTube, we now rely on the OEmbed standard. Thanks to https://www.npmjs.com/package/oembed-parser 
+    - This allows to preserve the timestamp on Youtube and to get default size for many websites.
 
 ## 0.2.0
 - Update: the keybinding from `Mode + Shift + I` to `Alt + I` ([Issue 4](https://github.com/FHachez/obsidian-convert-url-to-iframe/issues/4)) 

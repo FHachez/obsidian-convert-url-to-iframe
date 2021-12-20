@@ -1,12 +1,13 @@
 import { hasProvider, extract, VideoTypeData, setRequestOptions } from 'oembed-parser'
-import {sanitize} from 'dompurify'
+import * as DOMPurify from 'dompurify'
+
 
 
 const buildDefaultIframe = (url: string) => {
     return `<iframe src=${url} allow="fullscreen" style="height:100%;width:100%; aspect-ratio=16/9;"></iframe>`
 }
 
-export const getIframe = async (url: string): Promise<string> => {
+export const getIframeGeneratorFromSanitize = (sanitize: typeof DOMPurify.sanitize) => async (url: string): Promise<string> => {
     const defaultHtml = buildDefaultIframe(url);
     if (!hasProvider(url)) {
         return defaultHtml
@@ -37,6 +38,8 @@ export const getIframe = async (url: string): Promise<string> => {
         return defaultHtml
     }
 }
+
+export const getIframe = getIframeGeneratorFromSanitize(DOMPurify.sanitize);
 
 
 export function isUrl(text: string): boolean {
