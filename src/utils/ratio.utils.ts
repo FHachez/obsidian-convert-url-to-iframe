@@ -10,7 +10,8 @@ export const swapRatio = (ratio: AspectRatioType) => {
 }
 
 export const addAspectRatio = (iframe: HTMLIFrameElement): HTMLIFrameElement => {
-    if (iframe?.style.aspectRatio) {
+    console.log(JSON.stringify(iframe.style), iframe.style.aspectRatio.toString())
+    if (iframe?.style.getPropertyValue('aspect-ratio') || iframe?.style.aspectRatio) {
         return iframe
     }
 

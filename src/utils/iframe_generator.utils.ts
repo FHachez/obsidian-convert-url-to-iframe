@@ -4,7 +4,7 @@ import * as DOMPurify from 'dompurify'
 
 
 const buildDefaultIframe = (url: string) => {
-    return `<iframe src=${url} allow="fullscreen" style="height:100%;width:100%; aspect-ratio=16/9;"></iframe>`
+    return `<iframe src=${url} allow="fullscreen" style="height:100%;width:100%; aspect-ratio: 16 / 9;"></iframe>`
 }
 
 export const getIframeGeneratorFromSanitize = (sanitize: typeof DOMPurify.sanitize) => async (url: string): Promise<string> => {
@@ -41,10 +41,3 @@ export const getIframeGeneratorFromSanitize = (sanitize: typeof DOMPurify.saniti
 
 export const getIframe = getIframeGeneratorFromSanitize(DOMPurify.sanitize);
 
-
-export function isUrl(text: string): boolean {
-    const urlRegex = new RegExp(
-        "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$"
-    );
-    return urlRegex.test(text);
-}

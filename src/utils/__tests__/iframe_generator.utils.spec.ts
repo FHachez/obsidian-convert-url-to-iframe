@@ -1,7 +1,7 @@
 import * as DOMPurify from 'dompurify'
 import { JSDOM } from 'jsdom';
 
-import { isUrl, getIframeGeneratorFromSanitize} from '../url_converter';
+import { getIframeGeneratorFromSanitize} from '../iframe_generator.utils';
 
 describe('getIframeNode', () => {
 	const getIframe = getIframeGeneratorFromSanitize(DOMPurify(new JSDOM('').window as unknown as Window).sanitize);
@@ -13,19 +13,6 @@ describe('getIframeNode', () => {
 	]
 	it.each(inputToExpectedOutput)('should correctly parse "%s"', async (input: string, expected) => {
 		const output = await getIframe(input);
-
-		expect(output).toStrictEqual(expected)
-	})
-})
-
-describe('isUrl', () => {
-	const inputToExpectedOutput = [
-		["Quotes at vault/test.md", false],
-		["https://github.com/", true],
-		["https://www.youtube.com/watch?v=FY7DtKMBxBw", true],
-	]
-	it.each(inputToExpectedOutput)('should correctly parse "%s"', (input: string, expected) => {
-		const output = isUrl(input);
 
 		expect(output).toStrictEqual(expected)
 	})
