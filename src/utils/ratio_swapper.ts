@@ -8,3 +8,15 @@ export const swapRatio = (ratio: AspectRatioType) => {
     const [a,b] = ratio.split('/');
     return `${b}/${a}`;``
 }
+
+export const addAspectRatio = (iframe: HTMLIFrameElement): HTMLIFrameElement => {
+    if (iframe?.style.aspectRatio) {
+        return iframe
+    }
+
+    const ratio = iframe.offsetWidth/ iframe.offsetHeight;
+    iframe.style.setProperty('aspect-ratio', ratio.toString());
+    console.log('Set ratio', iframe.offsetWidth, iframe.offsetHeight, 'computed', ratio);
+
+    return iframe
+}

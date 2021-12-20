@@ -1,6 +1,6 @@
 import { defaultHeight } from "src/constant";
 import { AspectRatioType } from "src/types/aspect-ratio";
-import { swapRatio } from "src/utils/ratio_swapper";
+import { addAspectRatio, swapRatio } from "src/utils/ratio_swapper";
 
 export interface IResizableIframeContainerOutput {
     iframeContainer: HTMLElement,
@@ -24,9 +24,8 @@ export function createIframeContainerEl(contentEl: HTMLElement, iframeHtml: stri
 	iframeContainer.appendChild(iframe);
 	//const iframe = iframeContainer.createEl('iframe');
 	iframe.allow = "fullscreen"
-	iframe.style.height = '100%';
-	iframe.style.width = '100%';
-	iframe.style.setProperty('aspect-ratio', '16/9');
+	addAspectRatio(iframe);
+
 
     const resetToDefaultWidth= () => {
             iframe.style.width = '100%';
@@ -35,6 +34,7 @@ export function createIframeContainerEl(contentEl: HTMLElement, iframeHtml: stri
 	
 	resetToDefaultWidth();
 
+	console.log(iframeHtml, iframe)
 
 	return {
         iframeContainer,
