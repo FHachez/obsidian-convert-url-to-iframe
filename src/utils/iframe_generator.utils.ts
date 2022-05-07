@@ -1,10 +1,10 @@
-import { hasProvider, extract, VideoTypeData, setRequestOptions } from 'oembed-parser'
+import { hasProvider, extract, VideoTypeData} from 'oembed-parser'
 import * as DOMPurify from 'dompurify'
 
 
 
 const buildDefaultIframe = (url: string) => {
-    return `<iframe src=${url} allow="fullscreen" style="height:100%;width:100%; aspect-ratio: 16 / 9;"></iframe>`
+    return `<iframe src=${url} allow="fullscreen" allowfullscreen style="height:100%;width:100%; aspect-ratio: 16 / 9; "></iframe>`
 }
 
 export const getIframeGeneratorFromSanitize = (sanitize: typeof DOMPurify.sanitize) => async (url: string): Promise<string> => {

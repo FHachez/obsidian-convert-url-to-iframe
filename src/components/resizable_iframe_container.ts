@@ -32,7 +32,10 @@ export function createIframeContainerEl(contentEl: HTMLElement, iframeHtml: stri
 	
 	resetToDefaultWidth();
 
-	console.log(iframeHtml, iframe)
+	// Always allow full screen
+	// TODO make it an option
+	iframe.allowFullscreen = true;
+	iframe.allow= 'fullscreen'
 
 	return {
         iframeContainer,
