@@ -5,5 +5,5 @@
   "description": "Convert an url (ex, youtube) into an iframe (preview)",
   "author": "Hachez Floran",
   "authorUrl": "https://github.com/FHachez",
-  "isDesktopOnly": true
+  "isDesktopOnly": false
 }
