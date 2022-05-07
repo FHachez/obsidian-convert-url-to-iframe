@@ -17,6 +17,8 @@ Support for 3rd party plugins is enabled in settings (Obsidian > Settings > Thir
 To install this plugin, download zip archive from GitHub releases page. Extract the archive into <vault>/.obsidian/plugins.
 
 # Change log
+## 0.5.0
+- Always allow full screen for the iframe. In the future it will be an option
 
 ## 0.4.0
 - Instead of doing a custom mapping to embed for YouTube, we now rely on the OEmbed standard. Thanks to https://www.npmjs.com/package/oembed-parser 
