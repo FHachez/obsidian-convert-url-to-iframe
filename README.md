@@ -19,6 +19,7 @@ To install this plugin, download zip archive from GitHub releases page. Extract 
 # Change log
 ## 0.5.0
 - Always allow full screen for the iframe. In the future it will be an option
+- Enable mobile mode.
 
 ## 0.4.0
 - Instead of doing a custom mapping to embed for YouTube, we now rely on the OEmbed standard. Thanks to https://www.npmjs.com/package/oembed-parser 
