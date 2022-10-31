@@ -1,7 +1,7 @@
 {
   "name": "obsidian-convert-url-to-iframe",
   "version": "0.5.0",
-  "description": "Convert an url (ex, youtube) into an iframe (preview)",
+  "description": "Convert a URL (ex, youtube) into an iframe (preview)",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",

@@ -3,9 +3,9 @@
 
 ![Demo](images/demo-url-to-preview-0.4.0.gif)
 
-1. Select an url 
-2. right click on it (or use the command `Convert to Url Preview`)
-3. Click on `Url to Preview/Iframe`.
+1. Select a URL 
+2. Right click on it (or use the command `Convert to URL Preview`)
+3. Click on `URL to Preview/Iframe`.
 ![contextual menu](images/contextual-menu.png)
 
 
