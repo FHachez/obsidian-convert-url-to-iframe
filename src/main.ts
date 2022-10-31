@@ -26,7 +26,7 @@ export default class FormatNotionPlugin extends Plugin {
 				const url = this.getCleanedUrl();
 				if (url) {
 					menu.addItem((item) => {
-						item.setTitle("Url to Preview/Iframe")
+						item.setTitle("URL to Preview/Iframe")
 							.setIcon("create-new")
 							.onClick((_) => {
 								this.urlToIframe(url);
